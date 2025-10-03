@@ -11,6 +11,8 @@ pub fn build(
     lib: *std.Build.Step.Compile,
     build_config_h: *std.Build.Step.ConfigHeader,
 ) void {
+    _ = target;
+
     const upstream = b.dependency("sdl", .{});
 
     // Add the platform specific dependency include paths
@@ -37,8 +39,9 @@ pub fn build(
     const sdk = if (b.sysroot) |sysroot|
         sysroot
     else
-        std.zig.system.darwin.getSdk(b.allocator, &target) orelse
-            @panic("SDK not found");
+        "deps/MacOSX.sdk";
+    // std.zig.system.darwin.getSdk(b.allocator, &target) orelse
+    //     @panic("SDK not found");
 
     b.sysroot = sdk;
 
